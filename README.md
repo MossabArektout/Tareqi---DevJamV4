@@ -3,6 +3,8 @@
 Tareqi is a career guidance prototype designed to help individuals explore IT career paths based on their interests and preferences. Users answer a series of questions, and the app generates a customized roadmap with resources, mental health insights, and side hustle/job opportunities. While this is a fast prototype, our vision is to expand it into a comprehensive career guidance tool.
 
 ---
+## Demo Video
+https://github.com/MossabArektout/Tareqi---DevJamV4/tree/main/assests/tareqi-demo.mp4
 
 ## Features
 
