@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Questionnaire - Tareqi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/question.css') }}">
+
+    <style>
+        /* Loading screen styles */
+        .loading-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 999;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            border: 10px solid rgba(0, 0, 0, 0.1);
+            border-top-color: #007bff;
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p class="loading-text">AI is searching for the best career for you...</p>
+        </div>
+    </div>
+
+    <div class="bg-elements">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-route logo-icon"></i>
+                Tareqi
+            </a>
+    
+            <div class="nav-links">
+                <a href="#home"><i class="fas fa-home"></i> Home</a>
+                <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+                <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+    
+                {% if session['user_id'] %}
+                    <a href="#"><i class="fas fa-user"></i></a>
+                    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Signup</a>
+                {% endif %}
+            </div>
+            
+            <div class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+    
+
+
+    <section class="questionnaire-section">
+        <div class="container">
+            <div class="questionnaire-card" data-aos="fade-up">
+                <div class="questionnaire-header">
+                    <h2 class="hero-title">IT Career Pathfinder</h2>
+                    <p class="hero-subtitle">Answer 8 questions to discover your ideal tech career</p>
+                </div>
+
+                <form class="questionnaire-form" onsubmit="submitForm(event)">
+                    <!-- Question 1 -->
+                    <div class="question-card" data-aos="fade-up">
+                        <div class="question-header">
+                            <span class="question-number">1</span>
+                            <h3>What interests you most about technology?</h3>
+                        </div>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="q1" value="A">
+                                <div class="option-content">
+                                    <i class="fas fa-tools"></i>
+                                    <h4>Building and creating things</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q1" value="B">
+                                <div class="option-content">
+                                    <i class="fas fa-chart-line"></i>
+                                    <h4>Solving complex problems using data</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q1" value="C">
+                                <div class="option-content">
+                                    <i class="fas fa-robot"></i>
+                                    <h4>Working with AI and smart systems</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q1" value="D">
+                                <div class="option-content">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <h4>Cybersecurity</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q1" value="E">
+                                <div class="option-content">
+                                    <i class="fas fa-users-cog"></i>
+                                    <h4>IT management</h4>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="question-card" data-aos="fade-up">
+                        <div class="question-header">
+                            <span class="question-number">2</span>
+                            <h3>Do you enjoy working with data?</h3>
+                        </div>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="q2" value="A">
+                                <div class="option-content">
+                                    <i class="fas fa-database"></i>
+                                    <h4>Yes, I love analyzing data</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q2" value="B">
+                                <div class="option-content">
+                                    <i class="fas fa-paint-brush"></i>
+                                    <h4>No, I prefer other aspects</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q2" value="C">
+                                <div class="option-content">
+                                    <i class="fas fa-book-open"></i>
+                                    <h4>I'm open to learning</h4>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="question-card" data-aos="fade-up">
+                        <div class="question-header">
+                            <span class="question-number">3</span>
+                            <h3>How do you feel about coding?</h3>
+                        </div>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="q3" value="A">
+                                <div class="option-content">
+                                    <i class="fas fa-heart"></i>
+                                    <h4>I love it!</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q3" value="B">
+                                <div class="option-content">
+                                    <i class="fas fa-meh"></i>
+                                    <h4>Not a fan, but okay</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q3" value="C">
+                                <div class="option-content">
+                                    <i class="fas fa-question"></i>
+                                    <h4>Never tried, but open</h4>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="question-card" data-aos="fade-up">
+                        <div class="question-header">
+                            <span class="question-number">4</span>
+                            <h3>Work environment preference?</h3>
+                        </div>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="q4" value="A">
+                                <div class="option-content">
+                                    <i class="fas fa-heart"></i>
+                                    <h4>Fast-paced (startups)</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q4" value="B">
+                                <div class="option-content">
+                                    <i class="fas fa-meh"></i>
+                                    <h4>Structured (corporate)</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q4" value="C">
+                                <div class="option-content">
+                                    <i class="fas fa-question"></i>
+                                    <h4>Flexible (freelance)</h4>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 5 -->
+                    <div class="question-card" data-aos="fade-up">
+                        <div class="question-header">
+                            <span class="question-number">5</span>
+                            <h3>Interested in AI/ML??</h3>
+                        </div>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="q5" value="A">
+                                <div class="option-content">
+                                    <i class="fas fa-heart"></i>
+                                    <h4>Yes, fascinated</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q5" value="B">
+                                <div class="option-content">
+                                    <i class="fas fa-meh"></i>
+                                    <h4>No, prefer other fields</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q5" value="C">
+                                <div class="option-content">
+                                    <i class="fas fa-question"></i>
+                                    <h4>Curious to learn</h4>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 6-->
+                    <div class="question-card" data-aos="fade-up">
+                        <div class="question-header">
+                            <span class="question-number">6</span>
+                            <h3>Working with large datasets?</h3>
+                        </div>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="q6" value="A">
+                                <div class="option-content">
+                                    <i class="fas fa-heart"></i>
+                                    <h4>Love it</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q6" value="B">
+                                <div class="option-content">
+                                    <i class="fas fa-meh"></i>
+                                    <h4>Okay with it</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q6" value="C">
+                                <div class="option-content">
+                                    <i class="fas fa-question"></i>
+                                    <h4>Prefer small data</h4>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 7 -->
+                    <div class="question-card" data-aos="fade-up">
+                        <div class="question-header">
+                            <span class="question-number">7</span>
+                            <h3>Build or analyze systems?</h3>
+                        </div>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="q7" value="A">
+                                <div class="option-content">
+                                    <i class="fas fa-heart"></i>
+                                    <h4>Building systems</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q7" value="B">
+                                <div class="option-content">
+                                    <i class="fas fa-meh"></i>
+                                    <h4>Analyzing & optimizing</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q7" value="C">
+                                <div class="option-content">
+                                    <i class="fas fa-question"></i>
+                                    <h4>A mix of both</h4>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Question 8 -->
+                    <div class="question-card" data-aos="fade-up">
+                        <div class="question-header">
+                            <span class="question-number">8</span>
+                            <h3>Career goal?</h3>
+                        </div>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="q8" value="A">
+                                <div class="option-content">
+                                    <i class="fas fa-heart"></i>
+                                    <h4>Technical expert</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q8" value="B">
+                                <div class="option-content">
+                                    <i class="fas fa-meh"></i>
+                                    <h4> Leadership/management</h4>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="q8" value="C">
+                                <div class="option-content">
+                                    <i class="fas fa-question"></i>
+                                    <h4>Freelance/start business</h4>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Questions 4-8 follow similar structure with appropriate icons -->
+
+                    <div class="form-footer" data-aos="fade-up">
+                        <button type="submit" class="cta-button" onclick="submitForm(event)">
+                            <span>Get Career Recommendation</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800 });
+
+        async function submitForm(event) {
+            event.preventDefault();
+
+            // Show the loading screen
+            document.getElementById("loading-screen").style.display = "flex";
+
+            let answers = [];
+            for (let i = 1; i <= 8; i++) {
+                let selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selected) answers.push(selected.value);
+                else {
+                    alert("Please answer all questions.");
+                    // Hide the loading screen if answers are incomplete
+                    document.getElementById("loading-screen").style.display = "none";
+                    return;
+                }
+            }
+            
+            try {
+                const response = await fetch("/recommend-job", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ answers }),
+                });
+
+                const result = await response.json();
+                if (result.job) {
+                    window.location.href = `/roadmap/${encodeURIComponent(result.job)}`;
+                } else {
+                    alert("Error generating recommendation");
+                    document.getElementById("loading-screen").style.display = "none"; // Hide loading if error occurs
+                }
+            } catch (error) {
+                alert("Error submitting form");
+                document.getElementById("loading-screen").style.display = "none"; // Hide loading if error occurs
+            }
+        }
+    </script>
+</body>
+</html>

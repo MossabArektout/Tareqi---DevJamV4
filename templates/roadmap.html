@@ -1,0 +1,321 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Career Roadmap Generator</title>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+     <link rel="stylesheet" href="{{ url_for('static', filename='styles/roadmap.css') }}">
+     <style>
+         /* Style for the Sidebar */
+         .sidebar {
+             width: 300px;
+             height: 100%;
+             display: none;
+             background-color: #f4f4f4;
+             position: fixed;
+             right: -320px;
+             top: 0;
+             transition: right 0.3s ease;
+             padding: 20px;
+             box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.2);
+         }
+ 
+         .sidebar.visible {
+             right: 0;
+         }
+ 
+         #close-sidebar {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #close-sidebar:hover {
+            background-color: #e60000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        #close-sidebar:focus {
+            outline: none;
+        }
+        
+        #loading, #hustleLoading, #mentalHealthLoading, #schoolLoading {
+             display: none;
+             text-align: center;
+         }
+ 
+         /* Circle Loading Spinner */
+         .circle-loader {
+             display: inline-block;
+             width: 40px;
+             height: 40px;
+             border: 4px solid rgba(0, 0, 0, 0.1);
+             border-radius: 50%;
+             border-top-color: #3498db;
+             animation: spin 1s ease-in-out infinite;
+         }
+ 
+         @keyframes spin {
+             to {
+                 transform: rotate(360deg);
+             }
+         }
+ 
+         /* Button Styling */
+         button {
+             background-color: #3498db;
+             color: white;
+             border: none;
+             padding: 10px 20px;
+             cursor: pointer;
+             border-radius: 5px;
+             transition: background-color 0.3s ease;
+         }
+ 
+         button:hover {
+             background-color: #2980b9;
+         }
+ 
+         /* Page container styling */
+         .container {
+             margin: 40px auto;
+             padding: 20px;
+             width: 90%;
+             max-width: 800px;
+             background-color: #ffffff;
+             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+             border-radius: 10px;
+         }
+ 
+         h1, h2 {
+             color: #333;
+         }
+ 
+         .tooltip {
+             display: none;
+         }
+         .navbar {
+        background: rgba(42, 63, 84, 0.95);
+        padding: 15px 20px;
+        position: fixed; /* Fixes the navbar to the top */
+    top: 0; /* Aligns it at the top */
+    left: 0;
+    width: 97%; /* Ensures the navbar spans the full width of the screen */
+    z-index: 1000;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    /* Logo Styling */
+    .logo {
+        color: white;
+        font-size: 24px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .logo-icon {
+        margin-right: 10px;
+        color: white;
+    }
+
+    /* Links Styling */
+    .nav-links a {
+        color: white;
+        font-size: 16px;
+        margin-left: 20px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .nav-links a i {
+        margin-right: 8px;
+    }
+
+    .nav-links a:hover {
+        text-decoration: underline;
+    }
+
+    /* Mobile Menu Button */
+    .mobile-menu-button {
+        display: none;
+        font-size: 24px;
+        color: white;
+        cursor: pointer;
+    }
+
+    /* Responsive Navbar */
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: #3498db;
+            width: 100%;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links a {
+            margin: 10px 0;
+        }
+
+        .nav-links.show {
+            display: flex;
+        }
+
+        .mobile-menu-button {
+            display: block;
+        }
+    }
+     </style>
+ </head>
+ 
+ <body>
+    <div class="bg-elements">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+    </div>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-route logo-icon"></i> Tareqi
+            </a>
+    
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a>
+                <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+                <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+    
+                {% if session['user_id'] %}
+                    <a href="#"><i class="fas fa-user"></i> Profile</a>
+                    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Signup</a>
+                {% endif %}
+            </div>
+    
+            <div class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+    
+     <div class="container">
+         <h1>Career Roadmap Generator</h1>
+         <div id="input-section">
+             <input type="text" id="job-role" value="{{ job_role }}" placeholder="Enter a job role...">
+             <button id="generate-btn">Generate Roadmap</button>
+         </div>
+ 
+         <!-- Loading spinner for Roadmap Generation -->
+         <div id="loading">
+             <div class="circle-loader"></div>
+             <p>Generating your detailed roadmap... Please wait.</p>
+         </div>
+ 
+         <div id="view-toggle">
+             <button class="toggle-btn active" data-view="mindmap">Mindmap View</button>
+             <button class="toggle-btn" data-view="markdown">Markdown View</button>
+         </div>
+ 
+         <div id="roadmap-container">
+             <div id="mindmap-view"></div>
+             <div id="markdown-view" style="display: none;"></div>
+         </div>
+ 
+         <div class="legend" id="legend"></div>
+         <div class="controls" id="controls" style="display: none;">
+             <button class="zoom-control" id="zoom-in">Zoom In</button>
+             <button class="zoom-control" id="zoom-out">Zoom Out</button>
+             <button class="zoom-control" id="zoom-reset">Reset View</button>
+         </div>
+     </div>
+ 
+     <!-- Sidebar with close button -->
+     <div class="sidebar" id="sidebar">
+         <button id="close-sidebar">X</button>
+         <h2 id="sidebar-title">Section Info</h2>
+         <div id="sidebar-content"></div>
+         <div id="sidebar-courses">
+             <h3>Recommended Courses</h3>
+             <ul id="course-list"></ul>
+         </div>
+         <div id="research-papers-section">
+             <h3>📄 Recommended Research Papers</h3>
+             <ul id="research-paper-list"></ul>
+         </div>
+     </div>
+ 
+     <div class="container">
+        <h2>Education paths</h2>
+         <button id="generateSchoolsBtn">Show Side Hustles</button>
+         <div id="schoolLoading">
+             <div class="circle-loader"></div>
+             <p>Loading Recommended Schools...</p>
+         </div>
+         <div id="schoolResults"></div>
+
+         <h2>Jobs and Side Hustles</h2>
+         <button id="generateSideHustlesBtn">Show Side Hustles</button>
+         <div id="hustleLoading">
+             <div class="circle-loader"></div>
+             <p>Loading Side Hustles...</p>
+         </div>
+         <div id="hustleResults"></div>
+ 
+         <h2>Mental Health Report</h2>
+         <button id="generateMentalHealthBtn">Show Mental Health Report</button>
+         <div id="mentalHealthLoading">
+             <div class="circle-loader"></div>
+             <p>Loading Mental Health Report...</p>
+         </div>
+         <div id="mentalHealthResults"></div>
+     </div>
+ 
+     <div class="tooltip" id="tooltip"></div>
+     <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+     <script>
+         const sidebar = document.getElementById('sidebar');
+        const closeSidebarBtn = document.getElementById('close-sidebar');
+        closeSidebarBtn.addEventListener('click', () => {
+            sidebar.style.display = 'none';
+        });
+     </script>
+ </body>
+ 
+ </html>
+ 

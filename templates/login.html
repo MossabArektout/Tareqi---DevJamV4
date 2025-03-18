@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Tareqi</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #f8fafc;
+        }
+
+        .navbar {
+            width: 100%;
+            background: linear-gradient(145deg, rgba(21, 94, 117, 0.9) 0%, rgba(12, 74, 110, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 0;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 440px;
+            margin: 2rem auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+            position: relative;
+            z-index: 1;
+        }
+
+        h2 {
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            background: linear-gradient(45deg, #7dd3fc 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            color: #f8fafc;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: #94a3b8;
+        }
+
+        input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #7dd3fc;
+            box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.2);
+        }
+
+        .btn {
+            padding: 1rem;
+            background: linear-gradient(145deg, #7dd3fc 0%, #38bdf8 100%);
+            color: #0f172a;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+        }
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.75rem;
+            background: linear-gradient(145deg, rgba(239, 68, 68, 0.15) 0%, rgba(185, 28, 28, 0.15) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fecaca;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .alert::before {
+            content: "⚠️";
+            font-size: 1.2rem;
+        }
+
+        p {
+            margin-top: 1.5rem;
+            color: #94a3b8;
+            text-align: center;
+        }
+
+        p a {
+            color: #7dd3fc;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+
+        p a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #7dd3fc;
+            transition: width 0.3s ease;
+        }
+
+        p a:hover::after {
+            width: 100%;
+        }
+
+        /* Floating background elements */
+        .bg-shapes {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(56, 189, 248, 0.1) 0%, rgba(125, 211, 252, 0.05) 100%);
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(10vw, 10vh); }
+            50% { transform: translate(-5vw, 15vh); }
+            75% { transform: translate(-8vw, -5vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-shapes">
+        <div class="shape" style="width: 300px; height: 300px; top: 20%; left: 10%;"></div>
+        <div class="shape" style="width: 200px; height: 200px; top: 60%; right: 15%;"></div>
+        <div class="shape" style="width: 150px; height: 150px; bottom: 20%; left: 25%;"></div>
+    </div>
+
+    <nav class="navbar">Tareqi</nav>
+    
+    <div class="container">
+        <h2>Welcome Back</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="{{ url_for('login') }}">
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="btn">Sign In</button>
+        </form>
+        
+        <p>New to Tareqi? <a href="{{ url_for('register') }}">Create Account</a></p>
+    </div>
+</body>
+</html>

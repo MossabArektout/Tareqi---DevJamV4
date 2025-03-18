@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP - Tareqi</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: linear-gradient(145deg, rgba(21, 94, 117, 0.9) 0%, rgba(12, 74, 110, 0.9) 100%);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: #7dd3fc;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links a {
+            color: #f8fafc;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #7dd3fc;
+        }
+
+        .container {
+            flex: 1;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            background: linear-gradient(45deg, #7dd3fc 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .otp-input {
+            width: 200px;
+            padding: 1rem 1.25rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            color: #f8fafc;
+            font-size: 1.5rem;
+            text-align: center;
+            letter-spacing: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .otp-input::placeholder {
+            color: #94a3b8;
+            letter-spacing: normal;
+        }
+
+        .otp-input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #7dd3fc;
+            box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.2);
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(145deg, #7dd3fc 0%, #38bdf8 100%);
+            color: #0f172a;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+        }
+
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 0.75rem;
+            background: linear-gradient(145deg, rgba(239, 68, 68, 0.15) 0%, rgba(185, 28, 28, 0.15) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: #fecaca;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .alert::before {
+            content: "⚠️";
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer p {
+            color: #94a3b8;
+            text-align: center;
+            margin: 0;
+        }
+
+        .bg-shapes {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(56, 189, 248, 0.1) 0%, rgba(125, 211, 252, 0.05) 100%);
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(10vw, 10vh); }
+            50% { transform: translate(-5vw, 15vh); }
+            75% { transform: translate(-8vw, -5vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-shapes">
+        <div class="shape" style="width: 300px; height: 300px; top: 20%; left: 10%;"></div>
+        <div class="shape" style="width: 200px; height: 200px; top: 60%; right: 15%;"></div>
+        <div class="shape" style="width: 150px; height: 150px; bottom: 20%; left: 25%;"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">Tareqi</a>
+            <div class="nav-links">
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('index') }}">Home</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Verify OTP</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="{{ url_for('verify_otp') }}">
+            <input class="otp-input" type="text" name="otp" placeholder="000000" required 
+                   maxlength="6" pattern="\d{6}" inputmode="numeric">
+            <button type="submit" class="btn">Verify Code</button>
+        </form>
+    </div>
+
+    <footer class="footer">
+        <div class="nav-container">
+            <p>© 2023 Tareqi. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

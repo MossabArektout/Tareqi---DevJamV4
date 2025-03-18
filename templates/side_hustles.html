@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Hustles</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-600 text-white py-4">
+        <div class="container mx-auto text-center">
+            <h1 class="text-2xl font-bold">Explore Your Side Hustles</h1>
+        </div>
+    </header>
+
+    <div class="container mx-auto my-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for side_hustle in side_hustles %}
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+                    <img src="{{ side_hustle['image_url'] }}" alt="Side Hustle Image" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-blue-600">{{ side_hustle['title'] }}</h2>
+                        <p class="text-gray-700 mt-2">{{ side_hustle['description'] }}</p>
+                        <div class="mt-4">
+                            <a href="{{ side_hustle['link'] }}" target="_blank" class="text-blue-500 hover:text-blue-700 font-semibold">Find Out More</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <p class="col-span-full text-center text-gray-500">No side hustles available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2025 Side Hustles. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

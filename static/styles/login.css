@@ -1,0 +1,18 @@
+/* Login Specific Styles */
+.text-secondary {
+    color: var(--secondary) !important;
+}
+
+.text-secondary:hover {
+    text-decoration: underline;
+}
+
+/* Forgot Password Link */
+.auth-footer a.text-secondary {
+    color: var(--gray) !important;
+    font-size: 0.9rem;
+}
+
+.auth-footer a.text-secondary:hover {
+    color: var(--secondary) !important;
+}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareqi - Personalized Career Roadmaps</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS (Animate On Scroll) library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
+    <script src="{{ url_for('static', filename='scripts/script1.js')}}" defer></script>
+</head>
+<body>
+    <!-- Background elements -->
+    <div class="bg-elements">
+        <div class="bg-circle circle-1"></div>
+        <div class="bg-circle circle-2"></div>
+        <div class="bg-circle circle-3"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-route logo-icon"></i>
+                Tareqi
+            </a>
+    
+            <div class="nav-links">
+                <a href="#home"><i class="fas fa-home"></i> Home</a>
+                <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+                <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+    
+                {% if session['user_id'] %}
+                    <a href="#"><i class="fas fa-user"></i></a>
+                    <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    <a href="{{ url_for('register') }}"><i class="fas fa-user-plus"></i> Signup</a>
+                {% endif %}
+            </div>
+            
+            <div class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+    
+
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu">
+        <a href="#home"><i class="fas fa-home"></i> Home</a>
+        <a href="#about"><i class="fas fa-info-circle"></i> About</a>
+        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <h1 class="hero-title">Craft Your Future with Confidence</h1>
+                <p class="hero-subtitle">AI-powered career roadmaps tailored to your goals, skills, and aspirations</p>
+                <!-- <button class="cta-button">
+                    <span>Start Your Journey</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button> -->
+
+                <a href="{{ url_for('question') }}" class="cta-button">
+                    <span>Start Your Journey</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            <div class="hero-visual" data-aos="fade-left" data-aos-delay="300">
+                <div class="floating-element path-element">
+                    <i class="fas fa-road fa-3x"></i>
+                </div>
+                <div class="floating-element chart-element">
+                    <i class="fas fa-chart-line fa-3x"></i>
+                </div>
+                <div class="floating-element gear-element">
+                    <i class="fas fa-cogs fa-3x"></i>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrow">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="feature-cards">
+                <div class="feature-card" data-aos="fade-up">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI-Powered Insights</h3>
+                    <p>Our machine learning algorithm analyzes thousands of career paths to find your perfect match.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Personalized Roadmaps</h3>
+                    <p>Get detailed step-by-step guidance tailored to your unique skills and goals.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-video"></i>
+                    </div>
+                    <h3>Resources: Videos & Documents</h3>
+                    <p>Access curated videos and documents to further enhance your learning and career development.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Skill Development</h3>
+                    <p>Enhance your skills with practical exercises, workshops, and courses to stay ahead in your field.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Side Hustles</h3>
+                    <p>Discover ways to diversify your income and create additional opportunities for financial growth.</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Mental Health</h3>
+                    <p>Prioritize your well-being with resources and guidance for maintaining a healthy work-life balance.</p>
+                </div>
+                <!-- New Skill Development card -->
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">About Our Vision</h2>
+            <div class="team-grid">
+                <div class="team-member" data-aos="flip-left" data-aos-delay="100">
+                    <div class="member-photo">
+                        <img src="{{ url_for('static', filename='images/momo.png') }}" alt="Alex Chen">
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <h3>Mossab Arektout</h3>
+                    <p>Team Leader</p>
+                    <p>Software Engineer</p>
+                </div>
+                <div class="team-member" data-aos="flip-left" data-aos-delay="200">
+                    <div class="member-photo">
+                        <img src="{{ url_for('static', filename='images/an.png') }}" alt="Maria Gonzalez">
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <h3>Anouar Tayi</h3>
+                    <p>Business intelligence Engineer</p>
+                </div>
+                <div class="team-member" data-aos="flip-left" data-aos-delay="100">
+                    <div class="member-photo">
+                        <img src="{{ url_for('static', filename='images/ali.png') }}" alt="Alex Chen">
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <h3>Ali Benhima</h3>
+                    <p>Software Engineer</p>
+                </div>
+                <!-- <div class="team-member" data-aos="flip-left" data-aos-delay="100">
+                    <div class="member-photo">
+                        <img src="{{ url_for('static', filename='images/oussama.png') }}" alt="Alex Chen">
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <h3>Oussama Laghchim</h3>
+                    <p>Business intelligence Engineer</p>
+                </div> -->
+                <div class="team-member" data-aos="flip-left" data-aos-delay="100">
+                    <div class="member-photo">
+                        <img src="{{ url_for('static', filename='images/abdalleh.png') }}" alt="Alex Chen">
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <h3>Abdallahi Ahmed zerough</h3>
+                    <p>Cybersecurity Engineer</p>
+                </div>
+            </div>
+            <div class="mission-statement" data-aos="fade-up">
+                <i class="fas fa-quote-left quote-icon"></i>
+                <p>We believe everyone deserves a career they love. Tareqi combines human expertise with machine learning to create dynamic career paths that evolve with you.</p>
+                <div class="stats-counter">
+                    <div class="stat">
+                        <span class="counter" data-count="10000">0</span>+
+                        <p>Career Paths</p>
+                    </div>
+                    <div class="stat">
+                        <span class="counter" data-count="5000">0</span>+
+                        <p>Success Stories</p>
+                    </div>
+                    <div class="stat">
+                        <span class="counter" data-count="50">0</span>+
+                        <p>Industries</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Get in Touch</h2>
+            <div class="contact-form" data-aos="fade-up" data-aos-delay="100">
+                <form>
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" required></textarea>
+                    <button type="submit" class="submit-button">
+                        <span>Send Message</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <i class="fas fa-route logo-icon"></i>
+                        Tareqi
+                    </a>
+                    <p>Empowering career journeys worldwide.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>Navigation</h4>
+                        <a href="#home">Home</a>
+                        <a href="#about">About</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                    <div class="link-group">
+                        <h4>Resources</h4>
+                        <a href="#">Blog</a>
+                        <a href="#">Career Tips</a>
+                        <a href="#">FAQ</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 Tareqi. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
