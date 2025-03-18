@@ -4,9 +4,7 @@ Tareqi is a career guidance prototype designed to help individuals explore IT ca
 
 ---
 ## Demo Video
-https://github.com/MossabArektout/Tareqi---DevJamV4/tree/main/assests
-![Tareqi Demo](assests/tareqi-demo.gif)
-
+[![Tareqi Demo Video](https://github.com/MossabArektout/Tareqi---DevJamV4/raw/main/assests/tareqi-demo.gif)](https://github.com/MossabArektout/Tareqi---DevJamV4/raw/main/assests/tareqi-demo.mp4)
 
 ## Features
 
