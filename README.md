@@ -60,7 +60,7 @@ pip install Flask google-generativeai requests Flask-SQLAlchemy Flask-Mail sqlit
 ### Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/tareqi.git
+git clone https://github.com/yourusername/Tareqi---DevJamV4.git
 cd tareqi
 ```
 
